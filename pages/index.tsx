@@ -13,7 +13,7 @@ export async function getServerSideProps() {
 }
 const Home: NextPage = ({data}:any) => {
   const renderTitles = () => {
-    return data.map((data:any) => <p>{data.title}</p>)
+    return data.map((data:any,id:any) => <div key={id}><p>{data.title}</p></div>)
   }
   return (
     <div className={styles.container}>
