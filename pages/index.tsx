@@ -3,7 +3,18 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://jsonplaceholder.typicode.com/photos`)
+  const data = await res.json()
+  console.log('props',data)
+  // Pass data to the page via props
+  return { props: { data } }
+}
+const Home: NextPage = ({data}:any) => {
+  const renderTitles = () => {
+    return data.map((data:any) => <p>{data.title}</p>)
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -65,6 +76,9 @@ const Home: NextPage = () => {
           </span>
         </a>
       </footer>
+      <>
+      {renderTitles()}
+      </>
     </div>
   )
 }
